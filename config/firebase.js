@@ -1,7 +1,5 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore , collection } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDA82FCRo2Wxo-0MM-lXqJHEKO9N8hQvCE",
@@ -11,15 +9,12 @@ const firebaseConfig = {
     storageBucket:  "react-native-authenticat-f9a11.appspot.com",
     messagingSenderId: "403450464603",
     appId: " 1:403450464603:web:bc2df5568b6d9e4887327e"
-}
+};
 
-// Initialize Firebase app
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Firestore
-const firestore = getFirestore(app);
+// Initialize Firestore
+const db = getDatabase(app);
 
-// Initialize Firebase authentication
-const auth = getAuth(app);
-
-export { auth, firestore , collection };
+export { db };

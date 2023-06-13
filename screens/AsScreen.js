@@ -83,86 +83,36 @@ const AddData = () => {
   };
 
   return (
-    <ImageBackground source={require('../assets/rekaus_love.png')} style={styles.backgroundImage}>
 
+    <ImageBackground source={require('../assets/rekaus_love.png')} style={styles.backgroundImage}>
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text style={styles.title}>עד כמה ההכרות חזקה</Text>
+
+      <Text style={styles.title}> כעת ניתן למלא משוב על האחר, השתדלו לתת הערות בונות</Text>
       <ScrollView style={styles.scrollContainer}>
         <TextInput
-          placeholder=" שמכם המלא, ועל מי השאלון"
+          placeholder="כתבו את שם הפרטנר פלוס המילה משוב"
           value={title}
           onChangeText={(text) => setTitle(text)}
           style={styles.input}
         />
         <TextInput
-          placeholder="מהי הדרך האידיאלית שהפרטנר אוהב לבלות חופשה"
+          placeholder="איפה הרגשת שמכירים אותך יותר"
           value={body0}
           onChangeText={(text) => setBody0(text)}
-          multiline={true}
-          numberOfLines={3}
           style={styles.input}
         />
                 <TextInput
-          placeholder="מה גורם לו/ה לא לאהוב אדם"
+          placeholder="איפה הרגשת שמכירים אותך פחות"
           value={body1}
           onChangeText={(text) => setBody1(text)}
           style={styles.input}
         />
                 <TextInput
-          placeholder="מהם התכונות שהכי שמושכות את בן/ת הזוג"
+          placeholder="מה הבנת מבן הזוג/בת הזוג על סמך התשובות"
           value={body2}
           onChangeText={(text) => setBody2(text)}
           multiline={true}
           numberOfLines={3}
-          style={styles.input}
-        />
-                <TextInput
-          placeholder="אם הוא/היא יכל לנסוע לכל מדינה בעולם לחודש אחד, לאן היה נוסע"
-          value={body3}
-          onChangeText={(text) => setBody3(text)}
-          multiline={true}
-          numberOfLines={3}
-          style={styles.input}
-        />
-                <TextInput
-          placeholder="מהם 5 הכללים המובילים שלו/שלה לחיים"
-          value={body4}
-          onChangeText={(text) => setBody4(text)}
-          style={styles.input}
-        />
-                <TextInput
-          placeholder="מה הדבר האהוב עליו/עליה בבית שלך / שלנו"
-          value={body5}
-          onChangeText={(text) => setBody5(text)}
-          multiline={true}
-          numberOfLines={3}
-          style={styles.input}
-        />
-                <TextInput
-          placeholder="מהו השינוי המשמעותי ביותר שהיה/הייתה רוצה לעשות בחייו"
-          value={body6}
-          onChangeText={(text) => setBody6(text)}
-          multiline={true}
-          numberOfLines={3}
-          style={styles.input}
-        />
-                <TextInput
-          placeholder="מה הכי מרגיע אותו/אותה"
-          value={body7}
-          onChangeText={(text) => setBody7(text)}
-          style={styles.input}
-        />
-                <TextInput
-          placeholder="מה תהיה המתנה הכי גדולה לקבל"
-          value={body8}
-          onChangeText={(text) => setBody8(text)}
-          style={styles.input}
-        />
-
-                <TextInput
-          placeholder="מה המאכל האהוב עליו/עליה"
-          value={body9}
-          onChangeText={(text) => setBody9(text)}
           style={styles.input}
         />
 
@@ -175,8 +125,7 @@ const AddData = () => {
         <MaterialIcons name="check" size={32} color="#fff" />
       </Animated.View>
       </KeyboardAvoidingView>
-
-    </ImageBackground>
+      </ImageBackground>
 
   );
 };

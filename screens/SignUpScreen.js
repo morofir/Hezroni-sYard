@@ -3,15 +3,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { collection,addDoc } from 'firebase/firestore';
-import { firestore } from '../config/firebase';
 
 const auth = getAuth();
 
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [validationMessage, setValidationMessage] = useState('');
 
@@ -39,15 +36,6 @@ const SignUpScreen = ({ navigation }) => {
     }
 
     try {
-      
-      addDoc(collection(firestore,"users"), {
-        email: email,
-        name:name,
-      }).then(() => {
-        console.log('data submitted');
-      }).catch((error)=> {
-        console.log(error);
-      });;
       await createUserWithEmailAndPassword(auth, email, password);
       navigation.navigate('Sign In');
     } catch (error) {
