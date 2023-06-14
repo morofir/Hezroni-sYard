@@ -1,7 +1,14 @@
+<<<<<<< Updated upstream
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, ImageBackground } from "react-native";
 import { db } from "../config/firebase";
 import { ref, onValue, off } from "firebase/database";
+=======
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
+import { sRef, onValue } from '../utils/hooks/firebaseDatabase';
+import { db, auth } from '../config/firebase';
+>>>>>>> Stashed changes
 
 const FetchData = () => {
   const [todoData, setTodoData] = useState([]);
@@ -11,6 +18,7 @@ const FetchData = () => {
   useEffect(() => {
     fetchData();
 
+<<<<<<< Updated upstream
     // Detach the listener when the component unmounts
     return () => {
       off(starCountRef);
@@ -23,6 +31,47 @@ const FetchData = () => {
         const data = snapshot.val();
         const filteredData = filterDataByTitle(snapshot, data); // Pass snapshot as a parameter
         setTodoData(filteredData);
+=======
+    if (user) {
+      // Retrieve the current user's data
+      const currentUserDataRef = sRef(db, `data/${user.uid}`);
+      onValue(currentUserDataRef, (snapshot) => {
+        const fetchedData = snapshot.val();
+        if (fetchedData) {
+          const filteredData = Object.keys(fetchedData)
+            .filter((key) => fetchedData[key].title === searchTitle)
+            .map((key) => ({
+              id: key,
+              ...fetchedData[key],
+            }));
+          setData(filteredData);
+        } else {
+          setData([]);
+        }
+      });
+
+      // Retrieve data from connected users
+      const connectionsRef = ref(db, `users/${user.uid}/connections`);
+      onValue(connectionsRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const connections = snapshot.val();
+          const connectedUsersDataPromises = Object.keys(connections).map((connectedUserID) => {
+            const connectedUserDataRef = ref(db, `data/${connectedUserID}`);
+            return onValue(connectedUserDataRef, (snapshot) => {
+              const connectedUserData = snapshot.val();
+              if (connectedUserData) {
+                return { id: connectedUserID, ...connectedUserData };
+              }
+              return null;
+            });
+          });
+
+          Promise.all(connectedUsersDataPromises).then((connectedUsersData) => {
+            const filteredConnectedUsersData = connectedUsersData.filter((data) => data !== null);
+            setData((prevData) => [...prevData, ...filteredConnectedUsersData]);
+          });
+        }
+>>>>>>> Stashed changes
       });
     } else {
       // If searchTitle is empty, set the todoData to an empty array

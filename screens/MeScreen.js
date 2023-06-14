@@ -1,8 +1,16 @@
+<<<<<<< Updated upstream
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Animated, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { ref, set } from 'firebase/database';
 import { db } from '../config/firebase';
 import { MaterialIcons } from '@expo/vector-icons';
+=======
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { push, set, child } from 'firebase/database';
+import { db, auth } from '../config/firebase';
+import { sRef, onValue } from '../utils/hooks/firebaseDatabase';
+>>>>>>> Stashed changes
 
 const AddData = () => {
   const [title, setTitle] = useState('');
@@ -46,6 +54,7 @@ const AddData = () => {
         setBody8('');
         setBody9('');
 
+<<<<<<< Updated upstream
         // Start the checkmark animation
         startCheckmarkAnimation();
       })
@@ -53,6 +62,19 @@ const AddData = () => {
         console.log('Error adding data:', error);
       });
   };
+=======
+  const handleSubmit = () => {
+    if (user) {
+      const dataRef = sRef(db, `data/${user.uid}`);
+      const newDataRef = push(dataRef);
+      const entryID = newDataRef.key;
+
+      const newData = {
+        entryID,
+        title,
+        body,
+      };
+>>>>>>> Stashed changes
 
   const startCheckmarkAnimation = () => {
     Animated.sequence([

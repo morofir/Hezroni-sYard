@@ -8,6 +8,7 @@ const auth = getAuth();
 
 export default function HomeScreen({ navigation }) {
   const { user } = useAuthentication();
+<<<<<<< Updated upstream
 
   return (
     <ImageBackground source={require('../assets/rekaus_love.png')} style={styles.backgroundImage}>
@@ -32,6 +33,117 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
     </ImageBackground>
+=======
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [userOptions, setUserOptions] = useState([]);
+
+  const connectWithUser = async () => {
+    try {
+      const currentUser = auth.currentUser;
+      if (!currentUser) return;
+
+      if (!selectedUser) {
+        console.log('No user selected');
+        return;
+      }
+
+      const connectionsRef = collection(firestore, 'connections');
+      const newConnectionRef = doc(connectionsRef);
+      const newConnectionKey = newConnectionRef.id;
+
+      const connectionData = {
+        connectionId: newConnectionKey,
+        senderUserId: currentUser.email,
+        receiverUserId: selectedUser.email,
+        status: 'pending',
+      };
+
+      await setDoc(newConnectionRef, connectionData);
+
+      console.log('Connection created successfully');
+    } catch (error) {
+      console.error('Error connecting with user:', error);
+    }
+  };
+
+  async function fetchUsers() {
+    console.log('Fetching users...');
+
+    try {
+      const q = query(collection(firestore, 'users'));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        console.log('No other users found');
+        return;
+      }
+
+      const users = querySnapshot.docs.map((doc) => doc.data());
+      setUserOptions(users);
+      setModalVisible(true);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  }
+
+
+
+  const handleUserSelect = (value) => {
+    setSelectedUser(value);
+    setModalVisible(false);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome {user?.email}!</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MeScreen')}>
+        <Text style={styles.buttonText}>אני</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PartnerScreen')}>
+        <Text style={styles.buttonText}>בן או בת הזוג</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={fetchUsers}>
+        <Text style={styles.buttonText}>{selectedUser ? selectedUser.email : 'אנחנו'}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>העולם</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SyncScreen')}>
+        <Text style={styles.buttonText}>סנכרון עם משתמש</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NewFeature')}>
+        <Text style={styles.buttonText}>New Feature</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, styles.signOutButton]} onPress={() => signOut(auth)}>
+        <Text style={styles.signOutButtonText}>Sign Out</Text>
+      </TouchableOpacity>
+
+
+
+      <Modal
+        visible={modalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Picker
+              selectedValue={selectedUser}
+              onValueChange={handleUserSelect}
+            >
+              <Picker.Item label="Select a user..." value={null} />
+              {userOptions.map((user) => (
+                <Picker.Item key={user.email} label={user.email} value={user} />
+              ))}
+            </Picker>
+          </View>
+        </View>
+      </Modal>
+    </View>
+>>>>>>> Stashed changes
   );
 }
 

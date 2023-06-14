@@ -1,8 +1,14 @@
 import React, { useState, useRef } from 'react';
+<<<<<<< Updated upstream
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Animated, ScrollView, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { ref, set } from 'firebase/database';
+=======
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Animated } from 'react-native';
+import { set } from 'firebase/database';
+>>>>>>> Stashed changes
 import { db } from '../config/firebase';
 import { MaterialIcons } from '@expo/vector-icons';
+import { sRef, onValue } from '../utils/hooks/firebaseDatabase';
 
 const AddData = () => {
   const [title, setTitle] = useState('');
@@ -19,7 +25,7 @@ const AddData = () => {
   const checkmarkAnimation = useRef(new Animated.Value(0)).current;
 
   const dataAddOn = () => {
-    set(ref(db, 'posts/' + title), {
+    set(sRef(db, 'posts/' + title), {
       title: title,
       body0: body0,
       body1: body1,

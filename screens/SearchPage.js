@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView,TouchableOpacity } from 'react-native';
-import { ref, onValue, get } from 'firebase/database';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { get } from 'firebase/database';
 import { db, auth } from '../config/firebase';
+import { sRef, onValue } from '../utils/hooks/firebaseDatabase';
 
 const SearchPage = () => {
   const [searchTitle, setSearchTitle] = useState('');
@@ -12,7 +13,7 @@ const SearchPage = () => {
       const user = auth.currentUser;
       if (!user) return;
 
-      const connectionsRef = ref(db, `connections`);
+      const connectionsRef = sRef(db, `connections`);
       const connectionsSnapshot = await get(connectionsRef);
 
       if (!connectionsSnapshot.exists()) {
